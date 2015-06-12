@@ -1,0 +1,45 @@
+//
+//  PrefixHeader.pch
+//  JiongJiongYouShen
+//
+//  Created by deng on 15/4/27.
+//  Copyright (c) 2015年 deng. All rights reserved.
+//
+
+#ifndef JiongJiongYouShen_PrefixHeader_pch
+#define JiongJiongYouShen_PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "PureLayout.h"
+#endif
+
+// device verson float value
+#define CURRENT_SYS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
+
+// iPad
+#define kIsiPad (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+
+#define K_SCREEN_WIDTH  [[UIScreen mainScreen] bounds].size.width
+#define K_SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height
+
+//api定义
+#define api_web_root             @"http://www.9.com/"
+#define api_article_list         @"http://www.9.com/v1/article"
+#define api_article_post_store   @"http://www.9.com/v1/article"
+#define api_comment_list         @"http://www.9.com/v1/comment"
+#define api_comment_post_store   @"http://www.9.com/v1/comment"
+#define api_post_register        @"http://www.9.com/authApi/register"
+#define api_post_login           @"http://www.9.com/authApi/login"
+#define api_post_bindingSocialit @"http://www.9.com/authApi/bindingSocialit"
+#define api_logout               @"http://www.9.com/action/authApi/logout"
+
+
+
+#define AppVersion @"1.0.0"
+
+#endif
+

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" restorationIdentifier="commentCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="commentCell" rowHeight="122" id="MgS-1D-qNc" customClass="JJCommentTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="381" height="122"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MgS-1D-qNc" id="HqL-eg-G4J">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A5c-jf-avU">
+                        <rect key="frame" x="10" y="10" width="30" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="L82-c6-JDE"/>
+                            <constraint firstAttribute="height" constant="30" id="q6i-Mf-tgU"/>
+                        </constraints>
+                        <state key="normal" title="Button" image="default.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="15"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我就是姚明" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="85" translatesAutoresizingMaskIntoConstraints="NO" id="WpN-8G-LZA">
+                        <rect key="frame" x="50" y="14" width="85" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="这就是评论评论" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="293" translatesAutoresizingMaskIntoConstraints="NO" id="G3M-pa-Ydu">
+                        <rect key="frame" x="50" y="44" width="293" height="59.5"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="10" translatesAutoresizingMaskIntoConstraints="NO" id="e3d-6l-3DM">
+                        <rect key="frame" x="353" y="63.5" width="10" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fa-male.png" translatesAutoresizingMaskIntoConstraints="NO" id="OY2-f1-BA0">
+                        <rect key="frame" x="145" y="17" width="15" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="9y9-ks-KrN"/>
+                            <constraint firstAttribute="width" constant="15" id="Qcs-E6-cia"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="OY2-f1-BA0" firstAttribute="leading" secondItem="WpN-8G-LZA" secondAttribute="trailing" constant="10" id="0rv-9h-RaO"/>
+                    <constraint firstItem="OY2-f1-BA0" firstAttribute="leading" secondItem="WpN-8G-LZA" secondAttribute="trailing" constant="10" id="4Bo-df-hDB"/>
+                    <constraint firstItem="A5c-jf-avU" firstAttribute="centerY" secondItem="WpN-8G-LZA" secondAttribute="centerY" constant="10" id="4UA-0a-TZC"/>
+                    <constraint firstAttribute="centerX" secondItem="A5c-jf-avU" secondAttribute="centerX" constant="10" id="FRN-R7-cZS"/>
+                    <constraint firstItem="e3d-6l-3DM" firstAttribute="leading" secondItem="G3M-pa-Ydu" secondAttribute="trailing" constant="10" id="HcI-4K-b1v"/>
+                    <constraint firstItem="G3M-pa-Ydu" firstAttribute="top" secondItem="WpN-8G-LZA" secondAttribute="bottom" constant="10" id="HxD-SQ-yXQ"/>
+                    <constraint firstItem="A5c-jf-avU" firstAttribute="centerY" secondItem="WpN-8G-LZA" secondAttribute="centerY" constant="0.75" id="Igo-I8-5zw"/>
+                    <constraint firstItem="A5c-jf-avU" firstAttribute="top" secondItem="HqL-eg-G4J" secondAttribute="top" constant="10" id="IlY-cq-W6a"/>
+                    <constraint firstItem="WpN-8G-LZA" firstAttribute="centerX" secondItem="G3M-pa-Ydu" secondAttribute="centerX" constant="-10" id="Ntx-Di-YYf"/>
+                    <constraint firstItem="G3M-pa-Ydu" firstAttribute="top" secondItem="A5c-jf-avU" secondAttribute="bottom" constant="10" id="OpK-3F-Djs"/>
+                    <constraint firstItem="e3d-6l-3DM" firstAttribute="centerY" secondItem="G3M-pa-Ydu" secondAttribute="centerY" id="TGf-m7-I5e"/>
+                    <constraint firstItem="WpN-8G-LZA" firstAttribute="leading" secondItem="G3M-pa-Ydu" secondAttribute="leading" id="YHR-OB-uRw"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="G3M-pa-Ydu" secondAttribute="bottom" constant="10" id="atA-d3-1C7"/>
+                    <constraint firstItem="WpN-8G-LZA" firstAttribute="leading" secondItem="A5c-jf-avU" secondAttribute="trailing" constant="14" id="cHK-xs-wU1"/>
+                    <constraint firstItem="A5c-jf-avU" firstAttribute="leading" secondItem="HqL-eg-G4J" secondAttribute="leading" constant="10" id="cyg-Fo-VSM"/>
+                    <constraint firstAttribute="centerY" secondItem="A5c-jf-avU" secondAttribute="centerY" id="d9R-ll-9oM"/>
+                    <constraint firstItem="WpN-8G-LZA" firstAttribute="centerY" secondItem="OY2-f1-BA0" secondAttribute="centerY" id="gwl-oe-r7S"/>
+                    <constraint firstAttribute="centerY" secondItem="A5c-jf-avU" secondAttribute="centerY" constant="10" id="hjg-CV-rGg"/>
+                    <constraint firstItem="WpN-8G-LZA" firstAttribute="leading" secondItem="A5c-jf-avU" secondAttribute="trailing" constant="10" id="mNb-pA-Atb"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="e3d-6l-3DM" secondAttribute="trailing" constant="10" id="rTv-xd-Sav"/>
+                    <constraint firstItem="WpN-8G-LZA" firstAttribute="centerY" secondItem="OY2-f1-BA0" secondAttribute="centerY" constant="1.5" id="tMc-kE-05i"/>
+                    <constraint firstItem="e3d-6l-3DM" firstAttribute="leading" secondItem="G3M-pa-Ydu" secondAttribute="trailing" constant="10" id="x8c-Db-Hng"/>
+                    <constraint firstItem="WpN-8G-LZA" firstAttribute="centerX" secondItem="G3M-pa-Ydu" secondAttribute="centerX" id="xg8-NR-bFe"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="4UA-0a-TZC"/>
+                        <exclude reference="FRN-R7-cZS"/>
+                        <exclude reference="d9R-ll-9oM"/>
+                        <exclude reference="hjg-CV-rGg"/>
+                        <exclude reference="Ntx-Di-YYf"/>
+                        <exclude reference="cHK-xs-wU1"/>
+                        <exclude reference="tMc-kE-05i"/>
+                        <exclude reference="xg8-NR-bFe"/>
+                        <exclude reference="OpK-3F-Djs"/>
+                        <exclude reference="4Bo-df-hDB"/>
+                        <exclude reference="x8c-Db-Hng"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="avatarBtn" destination="A5c-jf-avU" id="eUK-yw-bFu"/>
+                <outlet property="contentLable" destination="G3M-pa-Ydu" id="Hjf-id-uu1"/>
+                <outlet property="nameLable" destination="WpN-8G-LZA" id="MNh-JX-yoB"/>
+                <outlet property="orderLable" destination="e3d-6l-3DM" id="jv1-sc-Jcw"/>
+                <outlet property="sexImg" destination="OY2-f1-BA0" id="r7j-iA-no1"/>
+            </connections>
+            <point key="canvasLocation" x="320.5" y="168"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="default.png" width="70" height="70"/>
+        <image name="fa-male.png" width="16" height="17"/>
+    </resources>
+</document>

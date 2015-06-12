@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>51043493-3081-4E83-989E-C515C1F51BA8</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>7C25AC53B95FE9469712D29C518D4ECD1787C7CD</key>
+		<string>https://github.com/CoderMJLee/MJExtension.git</string>
+	</dict>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>7C25AC53B95FE9469712D29C518D4ECD1787C7CD</key>
+		<string>MJExtension/</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/CoderMJLee/MJExtension.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>7C25AC53B95FE9469712D29C518D4ECD1787C7CD</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7C25AC53B95FE9469712D29C518D4ECD1787C7CD</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MJExtension</string>
+		</dict>
+	</array>
+</dict>
+</plist>
