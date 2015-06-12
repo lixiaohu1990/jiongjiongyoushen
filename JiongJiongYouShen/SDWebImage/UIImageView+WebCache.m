@@ -41,9 +41,9 @@ static char imageURLKey;
 - (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock {
     [self sd_cancelCurrentImageLoad];
     objc_setAssociatedObject(self, &imageURLKey, url, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-
-    if (!(options & SDWebImageDelayPlaceholder)) {
+     if (!(options & SDWebImageDelayPlaceholder)) {
         dispatch_main_async_safe(^{
+            
             self.image = placeholder;
         });
     }

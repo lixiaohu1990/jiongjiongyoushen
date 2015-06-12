@@ -8,7 +8,6 @@
 
 #import "JJFirstViewController.h"
 #import "JJDraftViewController.h"
-#import "JJTableViewCell.h"
 #import "JJTableViewCellPic.h"
 #import "JJDetailTableViewController.h"
 #import "AFNetworking.h"
@@ -23,7 +22,6 @@
 
 @interface JJFirstViewController()<UITableViewDelegate,UITableViewDataSource,MBProgressHUDDelegate>
 @property (nonatomic, strong) UITableView  *tableView;
-@property (nonatomic,strong) JJTableViewCell *propertyCell;
 @property (nonatomic,strong) JJTableViewCellPic *propertyCellPic;
 @property (nonatomic,strong)  NSMutableArray *article_arr;
 @property (nonatomic ,assign) NSUInteger page_count;
@@ -123,71 +121,14 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
   
-     Articles *arti=[_article_arr objectAtIndex:indexPath.row];
-    if (arti.img){
-        static NSString *cellIdentifierPic = @"TableViewCellPic";
-        JJTableViewCellPic *jiongTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifierPic];
-        
-        if (!jiongTableViewCell) {
-            jiongTableViewCell= [[JJTableViewCellPic alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierPic];
-        }
-        [jiongTableViewCell  removeConstraints];
-       return [self configureCellPic:jiongTableViewCell atIndexPath:indexPath];
-      }
-    else{
-        static NSString *cellIdentifier = @"TableViewCell";
-        JJTableViewCell *jiongTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        
-        if (!jiongTableViewCell) {
-            jiongTableViewCell= [[JJTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        }
-        [jiongTableViewCell  removeConstraints];
-       return [self configureCell:jiongTableViewCell atIndexPath:indexPath];
+    static NSString *cellIdentifierPic = @"TableViewCellPic";
+    JJTableViewCellPic *jiongTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifierPic];
+    
+    if (!jiongTableViewCell) {
+        jiongTableViewCell= [[JJTableViewCellPic alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierPic];
     }
-
-    
-    //  [jiongTableViewCell  removeConstraints];
-    
-    //  JJTableViewCell *  jiongTableViewCell= [[JJTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: nil];
-
-    }
--(UITableViewCell *) configureCell:(JJTableViewCell *)jiongTableViewCell atIndexPath:(NSIndexPath *)indexPath{
-    
-     Articles *arti=[_article_arr objectAtIndex:indexPath.row];
-    
-    jiongTableViewCell.nicknameLable.text=arti.user.name;
-    jiongTableViewCell.sexImg.image=[UIImage imageNamed:@"fa-female"];
-    jiongTableViewCell.timeLable.text=@"2小时前 ";
-    jiongTableViewCell.contentLable.text=arti.body;
-    if (arti.user.avatar) {
-        NSString *avatar=[ api_web_root stringByAppendingString:arti.user.avatar];
-        
-        NSData *avatar_data=[NSData dataWithContentsOfURL:[NSURL URLWithString:avatar]];
-        UIImage *avatar_image=[UIImage imageWithData:avatar_data];
-        
-        // NSLog(@"avatar_image %@",avatar);
-        //  [_avatar setImage:[UIImage imageNamed:@"default"] forState:UIControlStateNormal];
-        [jiongTableViewCell.avatar setImage:avatar_image forState:UIControlStateNormal];
-    }
-    
- 
-    jiongTableViewCell.jiongLable.text=[NSString stringWithFormat:@"%@ 囧",arti.good_num];
-    jiongTableViewCell.commentLable.text=[NSString stringWithFormat:@"%@ 评论",arti.comment_num];
-    
-    
-    [jiongTableViewCell setNeedsUpdateConstraints];
-    [jiongTableViewCell updateConstraintsIfNeeded];
-    
-    [jiongTableViewCell setNeedsLayout];
-    [jiongTableViewCell layoutIfNeeded];
-    
-    //添加点击事件
-    
-    [jiongTableViewCell.thumbUpBtn addTarget:self action:@selector(thumbUp:) forControlEvents:UIControlEventTouchUpInside];
-    [jiongTableViewCell.commentBtn addTarget:self action:@selector(comment:) forControlEvents:UIControlEventTouchUpInside];
-    
-    return jiongTableViewCell;
-    
+    [jiongTableViewCell  removeConstraints];
+    return [self configureCellPic:jiongTableViewCell atIndexPath:indexPath];
 }
 -(UITableViewCell *) configureCellPic:(JJTableViewCellPic *)jiongTableViewCell atIndexPath:(NSIndexPath *)indexPath{
    
@@ -205,16 +146,22 @@
         
         [jiongTableViewCell.avatar setImage:avatar_image forState:UIControlStateNormal];
     }
-    
-   
-     NSArray *m_size=[arti.img.image_size valueForKey:@"s"];
+    jiongTableViewCell.cell_type=CellTypeText;
+    if (arti.img) {
+        
+        NSArray *m_size=[arti.img.image_size valueForKey:@"s"];
+        
         jiongTableViewCell.image_size=CGSizeMake([[m_size objectAtIndex:0] floatValue],[[m_size objectAtIndex:1] floatValue]);
         
-     NSString *orginal_url = [arti.img.url stringByReplacingOccurrencesOfString:@"." withString:@"_m."];
+        NSString *orginal_url = [arti.img.url stringByReplacingOccurrencesOfString:@"." withString:@"_m."];
+     
         NSString *real_url=[ api_web_root stringByAppendingString:orginal_url];
+      
+        [jiongTableViewCell.contentImg sd_setImageWithURL:[NSURL URLWithString:real_url] placeholderImage:[UIImage imageNamed:@"placeholder"]];
         
-    [jiongTableViewCell.contentImg sd_setImageWithURL:[NSURL URLWithString:real_url] placeholderImage:[UIImage imageNamed:@"placeholder"]];
-    
+        jiongTableViewCell.cell_type=CellTypeImg;
+       //  NSLog(@"jiongTableViewCell %@",jiongTableViewCell.contentImg);
+     }
     
     
     jiongTableViewCell.jiongLable.text=[NSString stringWithFormat:@"%@ 囧",arti.good_num];
@@ -241,40 +188,21 @@
         return arti.cell_height;
     }
     
-    if (arti.img){
-        static NSString *cellIdentifierPic = @"TableViewCellPic";
-        if (!self.propertyCellPic) {
-            self.propertyCellPic = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifierPic];
-            if (!self.propertyCellPic)  self.propertyCellPic= [[JJTableViewCellPic alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierPic];
-        }
-        
-      [self.propertyCellPic  removeConstraints];
-      [self configureCellPic:self.propertyCellPic atIndexPath:indexPath];
-       CGSize size= [self.propertyCellPic.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-        
-      //  NSLog(@"propertyCellPic heightForRowAtIndexPath %ld ,%f ",(long)indexPath.row,size.height);
-        
-        arti.cell_height=size.height+1;
-        return  arti.cell_height;
-    
-    }else{
-        static NSString *cellIdentifier = @"TableViewCell";
-        if (!self.propertyCell) {
-            self.propertyCell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            if (!self.propertyCell)  self.propertyCell= [[JJTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        }
-         [self.propertyCell  removeConstraints];
-        [self configureCell:self.propertyCell atIndexPath:indexPath];
-        CGSize size= [self.propertyCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-      
-      //  NSLog(@"heightForRowAtIndexPath %ld ,%f ",(long)indexPath.row,size.height);
-      
-        arti.cell_height=size.height+1;
-        
-        return  arti.cell_height;
-
+    static NSString *cellIdentifierPic = @"TableViewCellPic";
+    if (!self.propertyCellPic) {
+        self.propertyCellPic = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifierPic];
+        if (!self.propertyCellPic)  self.propertyCellPic= [[JJTableViewCellPic alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierPic];
     }
+    [self.propertyCellPic  removeConstraints];
+    [self configureCellPic:self.propertyCellPic atIndexPath:indexPath];
     
+    CGSize size= [self.propertyCellPic.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    
+    //  NSLog(@"propertyCellPic heightForRowAtIndexPath %ld ,%f ",(long)indexPath.row,size.height);
+    
+    arti.cell_height=size.height+1;
+    return  arti.cell_height;
+
     
 //    static NSString *cellIdentifier = @"TableViewCell";
 //    static JJTableViewCell *jiongTableViewCell = nil;

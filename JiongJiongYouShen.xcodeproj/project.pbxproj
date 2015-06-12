@@ -91,7 +91,6 @@
 		21B7E72F1AEF466400E844DC /* Pencil.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B7E72C1AEF466400E844DC /* Pencil.png */; };
 		21B7E7301AEF466400E844DC /* Pencil@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B7E72D1AEF466400E844DC /* Pencil@2x.png */; };
 		21B7E7311AEF466400E844DC /* Pencil@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B7E72E1AEF466400E844DC /* Pencil@3x.png */; };
-		21B7E7341AEF523100E844DC /* JJTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B7E7331AEF523100E844DC /* JJTableViewCell.m */; };
 		21B7E7381AEF555300E844DC /* JJDraftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B7E7371AEF555300E844DC /* JJDraftViewController.m */; };
 		21B7E73F1AEF5AA300E844DC /* fa-meh-o.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B7E7391AEF5AA300E844DC /* fa-meh-o.png */; };
 		21B7E7401AEF5AA300E844DC /* fa-meh-o@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B7E73A1AEF5AA300E844DC /* fa-meh-o@2x.png */; };
@@ -314,8 +313,6 @@
 		21B7E72C1AEF466400E844DC /* Pencil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pencil.png; sourceTree = "<group>"; };
 		21B7E72D1AEF466400E844DC /* Pencil@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pencil@2x.png"; sourceTree = "<group>"; };
 		21B7E72E1AEF466400E844DC /* Pencil@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pencil@3x.png"; sourceTree = "<group>"; };
-		21B7E7321AEF523100E844DC /* JJTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJTableViewCell.h; sourceTree = "<group>"; };
-		21B7E7331AEF523100E844DC /* JJTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJTableViewCell.m; sourceTree = "<group>"; };
 		21B7E7361AEF555300E844DC /* JJDraftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJDraftViewController.h; sourceTree = "<group>"; };
 		21B7E7371AEF555300E844DC /* JJDraftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJDraftViewController.m; sourceTree = "<group>"; };
 		21B7E7391AEF5AA300E844DC /* fa-meh-o.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fa-meh-o.png"; sourceTree = "<group>"; };
@@ -568,8 +565,6 @@
 				21558E071AEE84E70049AEA3 /* JJProfileTableViewController.m */,
 				21558E091AEE85D80049AEA3 /* JJTabBarController.h */,
 				21558E0A1AEE85D80049AEA3 /* JJTabBarController.m */,
-				21B7E7321AEF523100E844DC /* JJTableViewCell.h */,
-				21B7E7331AEF523100E844DC /* JJTableViewCell.m */,
 				213160E91B2AB9B700AA3AB3 /* JJTableViewCellPic.h */,
 				213160EA1B2AB9B700AA3AB3 /* JJTableViewCellPic.m */,
 				21B7E7361AEF555300E844DC /* JJDraftViewController.h */,
@@ -1104,7 +1099,6 @@
 				21B7E7851AEF65D900E844DC /* MJRefreshLegendFooter.m in Sources */,
 				21B7C7F71AF4D5CB00A0AF8E /* AFURLResponseSerialization.m in Sources */,
 				21558E191AEE86620049AEA3 /* ALView+PureLayout.m in Sources */,
-				21B7E7341AEF523100E844DC /* JJTableViewCell.m in Sources */,
 				21B7E74D1AEF61C200E844DC /* Comments.m in Sources */,
 				21B7C7F51AF4D5CB00A0AF8E /* AFURLConnectionOperation.m in Sources */,
 				21B5CFEC1AFA47BE003F175E /* UIView+WebCacheOperation.m in Sources */,

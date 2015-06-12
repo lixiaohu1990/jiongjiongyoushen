@@ -160,22 +160,27 @@ static CGSize const kAvatarSize = {32.f, 32.f};
     [self.contentLable autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_avatar withOffset:10];
     [self.contentLable autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:_avatar];
    
-      self.contentImg.contentMode=UIViewContentModeScaleToFill;
-   
     
-      [self.contentImg autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_contentLable withOffset:10];
+    if (self.cell_type==CellTypeText) {
+        [self.jiongLable autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_contentLable withOffset:20];
+       // NSLog(@"contentImg %d,height %f",self.contentImg==nil,self.image_size.height);
+
+    }else{
+         self.contentImg.contentMode=UIViewContentModeScaleToFill;
+        [self.contentImg autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_contentLable withOffset:10];
         
-     [self.contentImg autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:_avatar];
-       
+        [self.contentImg autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:_avatar];
+    
      //   [self.contentImg autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:10];
      
-     CGFloat width=K_SCREEN_WIDTH-20;
-     CGFloat height= (self.image_size.height/ self.image_size.width)*width;
+       CGFloat width=K_SCREEN_WIDTH-20;
+       CGFloat height= (self.image_size.height/ self.image_size.width)*width;
         
-     [self.contentImg autoSetDimension:ALDimensionWidth toSize:width];
-     [self.contentImg autoSetDimension:ALDimensionHeight toSize:height];
+       [self.contentImg autoSetDimension:ALDimensionWidth toSize:width];
+       [self.contentImg autoSetDimension:ALDimensionHeight toSize:height];
     
-     [self.jiongLable autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_contentImg withOffset:20];
+       [self.jiongLable autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_contentImg withOffset:20];
+    }
     
     [self.jiongLable autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:_avatar];
    // [self.jiongLable autoSetDimensionsToSize:[self.jiongLable intrinsicContentSize]];
@@ -214,12 +219,14 @@ static CGSize const kAvatarSize = {32.f, 32.f};
     
     [self.contentView.constraints autoRemoveConstraints];
     
-     [self.contentImg.constraints autoRemoveConstraints];//必须有
+    [self.contentImg.constraints autoRemoveConstraints];//必须有
+    
+    for( UIView* view in self.contentView.subviews)
+    {
 
-//    for( UIView* view in self.contentView.subviews)
-//    {
-//        [view.constraints autoRemoveConstraints];
-//    }
+          //  NSLog(@"%@",view.constraints);
+        //[view.constraints autoRemoveConstraints];
+    }
 }
 
 - (void)updateConstraints {

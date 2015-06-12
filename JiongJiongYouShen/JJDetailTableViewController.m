@@ -8,11 +8,11 @@
 
 #import "JJDetailTableViewController.h"
 #import "JJDraftViewController.h"
-#import "JJTableViewCell.h"
+#import "JJTableViewCellPic.h"
 #import "JJCommentTableViewCell.h"
 #import "Emoji.h"
 @interface JJDetailTableViewController()<UITableViewDelegate,UITableViewDataSource>
-@property (nonatomic, strong) JJTableViewCell *prototypeCell;
+@property (nonatomic, strong) JJTableViewCellPic *prototypeCell;
 @property (nonatomic,strong) UITextView *textView;
 @property (nonatomic,strong) UIButton *faceBtn;
 @property (nonatomic,strong) UIButton *submitBtn;
@@ -44,7 +44,7 @@
     self.tableView.dataSource=self;
     self.tableView.delegate=self;
     [self.tableView setSeparatorInset:UIEdgeInsetsZero];
-    self.prototypeCell=[[JJTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    self.prototypeCell=[[JJTableViewCellPic alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     
     [self.view addSubview:_tableView];
     [self addCommentView];
@@ -200,9 +200,9 @@
 
 -(CGFloat)subjectCell:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    JJTableViewCell *jiongTableViewCell= self.prototypeCell;
+    JJTableViewCellPic *jiongTableViewCell= self.prototypeCell;
     if (!jiongTableViewCell) {
-        jiongTableViewCell = [[JJTableViewCell alloc] init];
+        jiongTableViewCell = [[JJTableViewCellPic alloc] init];
         self.prototypeCell=jiongTableViewCell;
     }
     
@@ -231,9 +231,9 @@
 - (UITableViewCell *)subjectCell {
 
     static NSString *cellIdentifier = @"TableViewCell";
-    JJTableViewCell *jiongTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    JJTableViewCellPic *jiongTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!jiongTableViewCell) {
-        jiongTableViewCell= [[JJTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        jiongTableViewCell= [[JJTableViewCellPic alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         
     }
     

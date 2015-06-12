@@ -7,11 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-
+typedef NS_ENUM(NSInteger, CellType) {
+    CellTypeText = 0,
+    CellTypeImg   = 1,
+    CellTypeVideo  = 2,
+};
 @interface JJTableViewCellPic : UITableViewCell
 @property (assign, nonatomic) NSNumber *artcicle_id;
 @property (assign, nonatomic) NSNumber *user_id;
 @property (assign, nonatomic) CGSize   image_size;
+@property (assign, nonatomic) CellType   cell_type;
 
 @property (strong, nonatomic) UIButton *avatar;
 @property (strong, nonatomic) UILabel *nicknameLable;
@@ -28,5 +33,4 @@
 @property (strong, nonatomic) UIButton *shareBtn;
 
 -(void)removeConstraints;
--(void)prepareForReuse;
 @end
