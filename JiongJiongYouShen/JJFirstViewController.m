@@ -14,7 +14,7 @@
 #import "MJExtension.h"
 #import "Articles.h"
 #import "MBProgressHUD.h"
-
+static NSString *cellIdentifierPic = @"TableViewCellPic";
 
 @interface JJFirstViewController()<UITableViewDelegate,UITableViewDataSource,MBProgressHUDDelegate>
 @property (nonatomic, strong) UITableView  *tableView;
@@ -45,6 +45,7 @@
     
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 44.0;
+    [self.tableView registerClass:[JJTableViewCellPic class] forCellReuseIdentifier:cellIdentifierPic];
     
     [self.view addSubview:_tableView];
     [self downLoad];
@@ -81,7 +82,7 @@
         _article_arr=[NSMutableArray arrayWithCapacity:10];
         [manner GET:api_article_list parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSArray *dicts=[responseObject valueForKey:@"data"];
-            _page_count=[responseObject valueForKey:@"count"];
+            _page_count=(NSUInteger)[responseObject valueForKey:@"count"];
 
             for (NSDictionary *dic in dicts) {
                  Articles *article=[Articles objectWithKeyValues:dic];
@@ -116,42 +117,33 @@
     return _article_arr.count;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-  
-    static NSString *cellIdentifierPic = @"TableViewCellPic";
-    JJTableViewCellPic *jiongTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifierPic];
     
-    if (!jiongTableViewCell) {
-        jiongTableViewCell= [[JJTableViewCellPic alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierPic];
-    }
-    return [self configureCellPic:jiongTableViewCell atIndexPath:indexPath];
+    JJTableViewCellPic *jiongTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifierPic];
+   
+    [self configureCellPic:jiongTableViewCell atIndexPath:indexPath];
+    
+    return jiongTableViewCell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
 
      Articles *article=[_article_arr objectAtIndex:indexPath.row];
-    if (article.cell_height) {
-        // NSLog(@"cell_height %ld %lf ",indexPath.row,arti.cell_height);
-        return article.cell_height;
-    }
+   
+    if (article.cell_height) return article.cell_height;
     
-    static NSString *cellIdentifierPic = @"TableViewCellPic";
-    if (!self.propertyCellPic) {
-        self.propertyCellPic = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifierPic];
-        if (!self.propertyCellPic)  self.propertyCellPic= [[JJTableViewCellPic alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierPic];
-    }
+    if (!self.propertyCellPic)   self.propertyCellPic = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifierPic];
+    
     [self configureCellPic:self.propertyCellPic atIndexPath:indexPath];
     
     CGSize size= [self.propertyCellPic.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     
-    //  NSLog(@"propertyCellPic heightForRowAtIndexPath %ld ,%f ",(long)indexPath.row,size.height);
-    
-    article.cell_height=size.height+1;
+    article.cell_height=size.height+1;//高度应该缓存到模型里，而不是cell MVC
     
     return  article.cell_height;
     
 }
 
--(UITableViewCell *) configureCellPic:(JJTableViewCellPic *)jiongTableViewCell atIndexPath:(NSIndexPath *)indexPath{
+-(void) configureCellPic:(JJTableViewCellPic *)jiongTableViewCell atIndexPath:(NSIndexPath *)indexPath{
     
     Articles *article=[_article_arr objectAtIndex:indexPath.row];
     
@@ -159,10 +151,8 @@
     
     //添加点击事件, 做一些其他事件工作
     [jiongTableViewCell.thumbUpBtn addTarget:self action:@selector(thumbUp:) forControlEvents:UIControlEventTouchUpInside];
+    
     [jiongTableViewCell.commentBtn addTarget:self action:@selector(comment:) forControlEvents:UIControlEventTouchUpInside];
-    
-    return jiongTableViewCell;
-    
 }
 
 -(void)thumbUp:(UIButton*)sender{

@@ -173,7 +173,7 @@ static CGSize const kAvatarSize = {32.f, 32.f};
       // NSLog(@"contentImg WEI NIL  %@,artcicle_id %@",self.contentImg.image,self.artcicle_id);
 
     }else{
-         NSLog(@"contentImg %@,artcicle_id %@",self.contentImg.image,self.artcicle_id);
+       //  NSLog(@"contentImg %@,artcicle_id %@",self.contentImg.image,self.artcicle_id);
          self.contentImg.contentMode=UIViewContentModeScaleToFill;
         [self.contentImg autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_contentLable withOffset:10];
         
@@ -223,9 +223,7 @@ static CGSize const kAvatarSize = {32.f, 32.f};
 
 - (void)setEntity:(Articles *)arti
 {
-    
-    [self removeConstraints];//设置可以修改约束和去掉以前的约束，防止复用出错
-    
+     [self removeConstraints];//设置可以修改约束和去掉以前的约束，防止复用出错
     _entity = arti;
     
     self.artcicle_id=arti.ID;
@@ -272,7 +270,10 @@ static CGSize const kAvatarSize = {32.f, 32.f};
     
     [self.contentImg.constraints autoRemoveConstraints];//必须有
 }
-
+//-(void)prepareForReuse{
+//    [super prepareForReuse];
+//    // NSLog(@"prepareForReuse artcicle_id %@",self.artcicle_id);
+//}
 - (void)updateCellConstraints {
     [self setNeedsUpdateConstraints];
     [self updateConstraintsIfNeeded];
