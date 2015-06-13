@@ -13,12 +13,8 @@
 #import "AFNetworking.h"
 #import "MJExtension.h"
 #import "Articles.h"
-#import "Img.h"
-#import "Video.h"
-#import "Student.h"
-#import "Users.h"
 #import "MBProgressHUD.h"
-#import "SDWebImage/UIImageView+WebCache.h"
+
 
 @interface JJFirstViewController()<UITableViewDelegate,UITableViewDataSource,MBProgressHUDDelegate>
 @property (nonatomic, strong) UITableView  *tableView;
@@ -127,65 +123,15 @@
     if (!jiongTableViewCell) {
         jiongTableViewCell= [[JJTableViewCellPic alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierPic];
     }
-    [jiongTableViewCell  removeConstraints];
     return [self configureCellPic:jiongTableViewCell atIndexPath:indexPath];
 }
--(UITableViewCell *) configureCellPic:(JJTableViewCellPic *)jiongTableViewCell atIndexPath:(NSIndexPath *)indexPath{
-   
-    Articles *arti=[_article_arr objectAtIndex:indexPath.row];
-    
-    jiongTableViewCell.nicknameLable.text=arti.user.name;
-    jiongTableViewCell.sexImg.image=[UIImage imageNamed:@"fa-female"];
-    jiongTableViewCell.timeLable.text=@"2小时前 ";
-    jiongTableViewCell.contentLable.text=arti.body;
-    if (arti.user.avatar) {
-        NSString *avatar=[ api_web_root stringByAppendingString:arti.user.avatar];
-        
-        NSData *avatar_data=[NSData dataWithContentsOfURL:[NSURL URLWithString:avatar]];
-        UIImage *avatar_image=[UIImage imageWithData:avatar_data];
-        
-        [jiongTableViewCell.avatar setImage:avatar_image forState:UIControlStateNormal];
-    }
-    jiongTableViewCell.cell_type=CellTypeText;
-    if (arti.img) {
-        
-        NSArray *m_size=[arti.img.image_size valueForKey:@"s"];
-        
-        jiongTableViewCell.image_size=CGSizeMake([[m_size objectAtIndex:0] floatValue],[[m_size objectAtIndex:1] floatValue]);
-        
-        NSString *orginal_url = [arti.img.url stringByReplacingOccurrencesOfString:@"." withString:@"_m."];
-     
-        NSString *real_url=[ api_web_root stringByAppendingString:orginal_url];
-      
-        [jiongTableViewCell.contentImg sd_setImageWithURL:[NSURL URLWithString:real_url] placeholderImage:[UIImage imageNamed:@"placeholder"]];
-        
-        jiongTableViewCell.cell_type=CellTypeImg;
-       //  NSLog(@"jiongTableViewCell %@",jiongTableViewCell.contentImg);
-     }
-    
-    
-    jiongTableViewCell.jiongLable.text=[NSString stringWithFormat:@"%@ 囧",arti.good_num];
-    jiongTableViewCell.commentLable.text=[NSString stringWithFormat:@"%@ 评论",arti.comment_num];
-    
-    [jiongTableViewCell setNeedsUpdateConstraints];
-    [jiongTableViewCell updateConstraintsIfNeeded];
-    
-    [jiongTableViewCell setNeedsLayout];
-    [jiongTableViewCell layoutIfNeeded];
-    
-    //添加点击事件
-    
-    [jiongTableViewCell.thumbUpBtn addTarget:self action:@selector(thumbUp:) forControlEvents:UIControlEventTouchUpInside];
-    [jiongTableViewCell.commentBtn addTarget:self action:@selector(comment:) forControlEvents:UIControlEventTouchUpInside];
-    
-    return jiongTableViewCell;
-}
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
 
-     Articles *arti=[_article_arr objectAtIndex:indexPath.row];
-    if (arti.cell_height) {
+     Articles *article=[_article_arr objectAtIndex:indexPath.row];
+    if (article.cell_height) {
         // NSLog(@"cell_height %ld %lf ",indexPath.row,arti.cell_height);
-        return arti.cell_height;
+        return article.cell_height;
     }
     
     static NSString *cellIdentifierPic = @"TableViewCellPic";
@@ -193,35 +139,33 @@
         self.propertyCellPic = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifierPic];
         if (!self.propertyCellPic)  self.propertyCellPic= [[JJTableViewCellPic alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierPic];
     }
-    [self.propertyCellPic  removeConstraints];
     [self configureCellPic:self.propertyCellPic atIndexPath:indexPath];
     
     CGSize size= [self.propertyCellPic.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     
     //  NSLog(@"propertyCellPic heightForRowAtIndexPath %ld ,%f ",(long)indexPath.row,size.height);
     
-    arti.cell_height=size.height+1;
-    return  arti.cell_height;
-
+    article.cell_height=size.height+1;
     
-//    static NSString *cellIdentifier = @"TableViewCell";
-//    static JJTableViewCell *jiongTableViewCell = nil;
-//    static dispatch_once_t onceToken;
-//    dispatch_once(&onceToken, ^{
-//        jiongTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-//        
-//        if (!jiongTableViewCell) {
-//            jiongTableViewCell = [[JJTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-//        }
-//    });
-//    
-//    [jiongTableViewCell  removeConstraints];
+    return  article.cell_height;
     
 }
 
+-(UITableViewCell *) configureCellPic:(JJTableViewCellPic *)jiongTableViewCell atIndexPath:(NSIndexPath *)indexPath{
+    
+    Articles *article=[_article_arr objectAtIndex:indexPath.row];
+    
+    jiongTableViewCell.entity=article;//这一步做了优化，详见setEntity
+    
+    //添加点击事件, 做一些其他事件工作
+    [jiongTableViewCell.thumbUpBtn addTarget:self action:@selector(thumbUp:) forControlEvents:UIControlEventTouchUpInside];
+    [jiongTableViewCell.commentBtn addTarget:self action:@selector(comment:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return jiongTableViewCell;
+    
+}
 
 -(void)thumbUp:(UIButton*)sender{
-   // NSLog(@"jiongTableViewCell Higth %@",sender);
     [sender setImage:[UIImage imageNamed:@"fa-thumbs-up"] forState:UIControlStateNormal];
 
 }

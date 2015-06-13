@@ -12,11 +12,13 @@ typedef NS_ENUM(NSInteger, CellType) {
     CellTypeImg   = 1,
     CellTypeVideo  = 2,
 };
+@class Articles;
 @interface JJTableViewCellPic : UITableViewCell
 @property (assign, nonatomic) NSNumber *artcicle_id;
 @property (assign, nonatomic) NSNumber *user_id;
 @property (assign, nonatomic) CGSize   image_size;
 @property (assign, nonatomic) CellType   cell_type;
+@property (strong,nonatomic ) Articles *entity;
 
 @property (strong, nonatomic) UIButton *avatar;
 @property (strong, nonatomic) UILabel *nicknameLable;
@@ -33,4 +35,5 @@ typedef NS_ENUM(NSInteger, CellType) {
 @property (strong, nonatomic) UIButton *shareBtn;
 
 -(void)removeConstraints;
+- (void)setEntity:(Articles *)entity;
 @end

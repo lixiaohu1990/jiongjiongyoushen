@@ -7,8 +7,14 @@
 //
 
 #import "JJTableViewCellPic.h"
+#import "Articles.h"
+#import "Users.h"
+#import "Img.h"
+#import "Video.h"
+#import "SDWebImage/UIImageView+WebCache.h"
+#import "SDWebImage/UIButton+WebCache.h"
+
 static CGSize const kAvatarSize = {32.f, 32.f};
-//static CGSize const kSexSize = {16.f, 16.f};
 @interface JJTableViewCellPic()
 @property (assign,nonatomic) BOOL didSetupConstraints;
 @end
@@ -159,13 +165,15 @@ static CGSize const kAvatarSize = {32.f, 32.f};
     [self.contentLable autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:10];
     [self.contentLable autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_avatar withOffset:10];
     [self.contentLable autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:_avatar];
+   //self.cell_type==CellTypeText
+    //self.contentImg.image==nil
    
-    
-    if (self.cell_type==CellTypeText) {
+    if (self.cell_type==CellTypeText ) {
         [self.jiongLable autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_contentLable withOffset:20];
-       // NSLog(@"contentImg %d,height %f",self.contentImg==nil,self.image_size.height);
+      // NSLog(@"contentImg WEI NIL  %@,artcicle_id %@",self.contentImg.image,self.artcicle_id);
 
     }else{
+         NSLog(@"contentImg %@,artcicle_id %@",self.contentImg.image,self.artcicle_id);
          self.contentImg.contentMode=UIViewContentModeScaleToFill;
         [self.contentImg autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_contentLable withOffset:10];
         
@@ -213,6 +221,49 @@ static CGSize const kAvatarSize = {32.f, 32.f};
     self.didSetupConstraints = YES;
 }
 
+- (void)setEntity:(Articles *)arti
+{
+    
+    [self removeConstraints];//设置可以修改约束和去掉以前的约束，防止复用出错
+    
+    _entity = arti;
+    
+    self.artcicle_id=arti.ID;
+    self.nicknameLable.text=arti.user.name;
+    self.sexImg.image=[UIImage imageNamed:@"fa-female"];
+    self.timeLable.text=@"2小时前 ";
+    self.contentLable.text=arti.body;
+    if (arti.user.avatar) {
+        NSString *avatar=[ api_web_root stringByAppendingString:arti.user.avatar];
+        
+        [self.avatar sd_setImageWithURL:[NSURL URLWithString:avatar]forState:UIControlStateNormal];
+    }
+    self.cell_type=CellTypeText;
+    self.contentImg.image=nil;//假如要用image判断，就要加入nil复原，这里因为还有vedeo，就不用这个
+    
+    if (arti.img) {
+        
+        NSArray *m_size=[arti.img.image_size valueForKey:@"s"];
+        
+        self.image_size=CGSizeMake([[m_size objectAtIndex:0] floatValue],[[m_size objectAtIndex:1] floatValue]);
+        
+        NSString *orginal_url = [arti.img.url stringByReplacingOccurrencesOfString:@"." withString:@"_m."];
+        
+        NSString *real_url=[ api_web_root stringByAppendingString:orginal_url];
+        
+        [self.contentImg sd_setImageWithURL:[NSURL URLWithString:real_url] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+        
+        self.cell_type=CellTypeImg;
+        //  NSLog(@"jiongTableViewCell %@",jiongTableViewCell.contentImg);
+    }
+    
+    self.jiongLable.text=[NSString stringWithFormat:@"%@ 囧",arti.good_num];
+    self.commentLable.text=[NSString stringWithFormat:@"%@ 评论",arti.comment_num];
+    
+    
+    [self updateCellConstraints];//更新约束
+}
+
 
 -(void) removeConstraints{
      _didSetupConstraints = NO;
@@ -220,15 +271,15 @@ static CGSize const kAvatarSize = {32.f, 32.f};
     [self.contentView.constraints autoRemoveConstraints];
     
     [self.contentImg.constraints autoRemoveConstraints];//必须有
-    
-    for( UIView* view in self.contentView.subviews)
-    {
-
-          //  NSLog(@"%@",view.constraints);
-        //[view.constraints autoRemoveConstraints];
-    }
 }
 
+- (void)updateCellConstraints {
+    [self setNeedsUpdateConstraints];
+    [self updateConstraintsIfNeeded];
+    
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
+}
 - (void)updateConstraints {
     if (!self.didSetupConstraints) {
         [self setUpConstraints];

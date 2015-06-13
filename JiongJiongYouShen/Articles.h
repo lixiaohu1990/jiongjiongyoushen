@@ -11,14 +11,14 @@
 @class Img;
 @class Video;
 @interface Articles : NSObject
-@property (assign, nonatomic) NSNumber *ID;
-@property (assign, nonatomic) NSNumber *user_id;
+@property (strong, nonatomic) NSNumber *ID;
+@property (strong, nonatomic) NSNumber *user_id;
 @property (copy, nonatomic) NSString *body;
-@property (assign, nonatomic) NSNumber *comment_num;
-@property (assign, nonatomic) NSNumber *good_num;
-@property (assign, nonatomic) NSNumber *share_num;
-@property (assign, nonatomic) NSString *created_at;
-@property (assign, nonatomic) CGFloat cell_height;
+@property (strong, nonatomic) NSNumber *comment_num;
+@property (strong, nonatomic) NSNumber *good_num;
+@property (strong, nonatomic) NSNumber *share_num;
+@property (strong, nonatomic) NSString *created_at;
+@property (assign, nonatomic) CGFloat cell_height;//缓存cell 高度
 @property (strong, nonatomic) Users *user;
 @property (strong, nonatomic) Img *img;
 @property (strong, nonatomic) Video *video;
