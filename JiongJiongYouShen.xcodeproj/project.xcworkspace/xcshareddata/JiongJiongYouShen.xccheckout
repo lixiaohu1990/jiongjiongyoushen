@@ -6,31 +6,35 @@
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>51043493-3081-4E83-989E-C515C1F51BA8</string>
+	<key>IDESourceControlProjectName</key>
+	<string>JiongJiongYouShen</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>7C25AC53B95FE9469712D29C518D4ECD1787C7CD</key>
-		<string>https://github.com/CoderMJLee/MJExtension.git</string>
+		<key>702A03614507E94B02EA5E86BBE5EF2F0A2ED5D8</key>
+		<string>https://github.com/jeffdeng/jiongjiongyoushen.git</string>
 	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>JiongJiongYouShen.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>7C25AC53B95FE9469712D29C518D4ECD1787C7CD</key>
-		<string>MJExtension/</string>
+		<key>702A03614507E94B02EA5E86BBE5EF2F0A2ED5D8</key>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/CoderMJLee/MJExtension.git</string>
+	<string>https://github.com/jeffdeng/jiongjiongyoushen.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>7C25AC53B95FE9469712D29C518D4ECD1787C7CD</string>
+	<string>702A03614507E94B02EA5E86BBE5EF2F0A2ED5D8</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>7C25AC53B95FE9469712D29C518D4ECD1787C7CD</string>
+			<string>702A03614507E94B02EA5E86BBE5EF2F0A2ED5D8</string>
 			<key>IDESourceControlWCCName</key>
-			<string>MJExtension</string>
+			<string>jiongjiongyoushen</string>
 		</dict>
 	</array>
 </dict>

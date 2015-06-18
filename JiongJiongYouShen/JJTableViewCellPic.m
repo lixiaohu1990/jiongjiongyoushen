@@ -175,17 +175,19 @@ static CGSize const kAvatarSize = {32.f, 32.f};
     }else{
        //  NSLog(@"contentImg %@,artcicle_id %@",self.contentImg.image,self.artcicle_id);
          self.contentImg.contentMode=UIViewContentModeScaleToFill;
+        self.contentImg.clipsToBounds = YES;
         [self.contentImg autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_contentLable withOffset:10];
         
         [self.contentImg autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:_avatar];
     
-     //   [self.contentImg autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:10];
+      //  [self.contentImg autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:10];
+         [self.contentImg autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:10 relation:NSLayoutRelationGreaterThanOrEqual];
      
-       CGFloat width=K_SCREEN_WIDTH-20;
-       CGFloat height= (self.image_size.height/ self.image_size.width)*width;
+     //  CGFloat width=K_SCREEN_WIDTH-20;
+     //  CGFloat height= (self.image_size.height/ self.image_size.width)*width;
         
-       [self.contentImg autoSetDimension:ALDimensionWidth toSize:width];
-       [self.contentImg autoSetDimension:ALDimensionHeight toSize:height];
+      // [self.contentImg autoSetDimension:ALDimensionWidth toSize:width];
+      // [self.contentImg autoSetDimension:ALDimensionHeight toSize:height];
     
        [self.jiongLable autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_contentImg withOffset:20];
     }
@@ -245,11 +247,16 @@ static CGSize const kAvatarSize = {32.f, 32.f};
         
         self.image_size=CGSizeMake([[m_size objectAtIndex:0] floatValue],[[m_size objectAtIndex:1] floatValue]);
         
-        NSString *orginal_url = [arti.img.url stringByReplacingOccurrencesOfString:@"." withString:@"_m."];
+        NSString *orginal_url = [arti.img.url stringByReplacingOccurrencesOfString:@"." withString:@"_s."];
         
         NSString *real_url=[ api_web_root stringByAppendingString:orginal_url];
         
-        [self.contentImg sd_setImageWithURL:[NSURL URLWithString:real_url] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+        //palceholder
+        UIImage *palceholder_200= [UIImage imageNamed:@"place.png"];
+        UIImage *palceholder=[self resizeImage:palceholder_200 toSize:self.image_size];
+        
+        //[self.contentImg sd_setImageWithURL:[NSURL URLWithString:real_url] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+        [self.contentImg sd_setImageWithURL:[NSURL URLWithString:real_url] placeholderImage:palceholder];
         
         self.cell_type=CellTypeImg;
         //  NSLog(@"jiongTableViewCell %@",jiongTableViewCell.contentImg);
@@ -268,7 +275,7 @@ static CGSize const kAvatarSize = {32.f, 32.f};
     
     [self.contentView.constraints autoRemoveConstraints];
     
-    [self.contentImg.constraints autoRemoveConstraints];//必须有
+  //  [self.contentImg.constraints autoRemoveConstraints];//必须有
 }
 //-(void)prepareForReuse{
 //    [super prepareForReuse];
@@ -311,5 +318,144 @@ static CGSize const kAvatarSize = {32.f, 32.f};
 
     // Configure the view for the selected state
 }
+- (UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize
 
+{
+    
+    UIGraphicsBeginImageContext(CGSizeMake(image.size.width * scaleSize, image.size.height * scaleSize));
+                                [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height * scaleSize)];
+                                UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+                                UIGraphicsEndImageContext();
+                                
+                                return scaledImage;
+                                
+                                }
+//2.自定长宽
+- (UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)reSize
+
+{
+    UIGraphicsBeginImageContext(CGSizeMake(reSize.width, reSize.height));
+    [image drawInRect:CGRectMake(0, 0, reSize.width, reSize.height)];
+    UIImage *reSizeImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return reSizeImage;
+    
+}
+
+-(UIImage*) scaleAndRotateImage:(UIImage*)photoimage :(CGFloat)bounds_width :(CGFloat)bounds_height
+{
+    //int kMaxResolution = 300;
+    
+    CGImageRef imgRef =photoimage.CGImage;
+    
+    CGFloat width = CGImageGetWidth(imgRef);
+    CGFloat height = CGImageGetHeight(imgRef);
+    
+    
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    CGRect bounds = CGRectMake(0, 0, width, height);
+    /*if (width > kMaxResolution || height > kMaxResolution)
+         {
+         CGFloat ratio = width/height;
+         if (ratio > 1)
+         {
+         bounds.size.width = kMaxResolution;
+         bounds.size.height = bounds.size.width / ratio;
+         }
+         else
+         {
+         bounds.size.height = kMaxResolution;
+         bounds.size.width = bounds.size.height * ratio;
+         }
+         }*/
+    bounds.size.width = bounds_width;
+    bounds.size.height = bounds_height;
+    
+    CGFloat scaleRatio = bounds.size.width / width;
+    CGFloat scaleRatioheight = bounds.size.height / height;
+    CGSize imageSize = CGSizeMake(CGImageGetWidth(imgRef), CGImageGetHeight(imgRef));
+    CGFloat boundHeight;
+    UIImageOrientation orient =photoimage.imageOrientation;
+    switch(orient)
+    {
+            
+            case UIImageOrientationUp: //EXIF = 1
+            transform = CGAffineTransformIdentity;
+            break;
+            
+            case UIImageOrientationUpMirrored: //EXIF = 2
+            transform = CGAffineTransformMakeTranslation(imageSize.width, 0.0);
+            transform = CGAffineTransformScale(transform, -1.0, 1.0);
+            break;
+            
+            case UIImageOrientationDown: //EXIF = 3
+            transform = CGAffineTransformMakeTranslation(imageSize.width, imageSize.height);
+            transform = CGAffineTransformRotate(transform, M_PI);
+            break;
+            
+            case UIImageOrientationDownMirrored: //EXIF = 4
+            transform = CGAffineTransformMakeTranslation(0.0, imageSize.height);
+            transform = CGAffineTransformScale(transform, 1.0, -1.0);
+            break;
+            
+            case UIImageOrientationLeftMirrored: //EXIF = 5
+            boundHeight = bounds.size.height;
+            bounds.size.height = bounds.size.width;
+            bounds.size.width = boundHeight;
+            transform = CGAffineTransformMakeTranslation(imageSize.height, imageSize.width);
+            transform = CGAffineTransformScale(transform, -1.0, 1.0);
+            transform = CGAffineTransformRotate(transform, 3.0 * M_PI / 2.0);
+            break;
+            
+            case UIImageOrientationLeft: //EXIF = 6
+            boundHeight = bounds.size.height;
+            bounds.size.height = bounds.size.width;
+            bounds.size.width = boundHeight;
+            transform = CGAffineTransformMakeTranslation(0.0, imageSize.width);
+            transform = CGAffineTransformRotate(transform, 3.0 * M_PI / 2.0);
+            break;
+            
+            case UIImageOrientationRightMirrored: //EXIF = 7
+            boundHeight = bounds.size.height;
+            bounds.size.height = bounds.size.width;
+            bounds.size.width = boundHeight;
+            transform = CGAffineTransformMakeScale(-1.0, 1.0);
+            transform = CGAffineTransformRotate(transform, M_PI / 2.0);
+            break;
+            
+            case UIImageOrientationRight: //EXIF = 8
+            boundHeight = bounds.size.height;
+            bounds.size.height = bounds.size.width;
+            bounds.size.width = boundHeight;
+            transform = CGAffineTransformMakeTranslation(imageSize.height, 0.0);
+            transform = CGAffineTransformRotate(transform, M_PI / 2.0);
+            break;
+            
+            default:
+            [NSException raise:NSInternalInconsistencyException format:@"Invalid?image?orientation"];
+            break;
+        }
+    
+    UIGraphicsBeginImageContext(bounds.size);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    if (orient == UIImageOrientationRight || orient == UIImageOrientationLeft)
+        {
+            CGContextScaleCTM(context, -scaleRatio, scaleRatioheight);
+            CGContextTranslateCTM(context, -height, 0);
+            }
+    else
+        {
+            CGContextScaleCTM(context, scaleRatio, -scaleRatioheight);
+            CGContextTranslateCTM(context, 0, -height);
+            }
+    
+    CGContextConcatCTM(context, transform);
+    
+    CGContextDrawImage(UIGraphicsGetCurrentContext(), CGRectMake(0, 0, width, height), imgRef);
+    UIImage *imageCopy = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return imageCopy;
+}
 @end
